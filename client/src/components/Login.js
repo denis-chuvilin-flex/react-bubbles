@@ -16,21 +16,19 @@ const Login = () => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    //send formstate to api
+
     axios
       .post(`http://localhost:5000/api/login`, formState)
-      .then(
-        //save token to local storage
-        (res) => {
-          console.log(res.data);
-          localStorage.setItem('token', res.data.payload);
-          history.push('/BubblePage');
-        }
-      )
-      .catch((err) => console.log(err.message));
-  };
+      .then((response) => {
+        //saving token to localstorate
+        localStorage.setItem('token', JSON.stringify(response.data.payload));
+        history.push('/BubblePage');
+      })
+      .catch((error) => console.log(error));
+  }
+
   return (
     <div className="welcome">
       <h1>Welcome to the Bubble App!</h1>

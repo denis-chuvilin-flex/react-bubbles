@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Pack } from "@potion/layout";
 import { Svg, Circle } from "@potion/element";
 
-const Bubbles = ({ colors }) => {
+const Bubbles = ({ colorList }) => {
   const [bubbleData, setBubbleData] = useState([]);
   useEffect(() => {
-    const generateBubbleData = colors.map((_, i) => ({
-      value: Math.floor(Math.random() * (colors.length * 2)) + 1,
+    const generateBubbleData = colorList.map((_, i) => ({
+      value: Math.floor(Math.random() * (colorList.length * 2)) + 1,
       key: `${i + 1}`
     }));
     setBubbleData(generateBubbleData);
-  }, [colors]);
+  }, [colorList]);
 
   return (
     <div className="bubble-wrap">
@@ -29,14 +29,14 @@ const Bubbles = ({ colors }) => {
           {nodes =>
             nodes
               .map(({ x, y, r, key }, i) => {
-                if (i < colors.length) {
+                if (i < colorList.length) {
                   return (
                     <Circle
                       key={key}
                       cx={x}
                       cy={y}
                       r={r}
-                      fill={colors[i].code.hex}
+                      fill={colorList[i].code.hex}
                     />
                   );
                 }
