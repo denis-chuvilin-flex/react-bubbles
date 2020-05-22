@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
+  const history = useHistory();
+
   const [formState, setFormState] = useState({
     username: '',
     password: '',
@@ -15,14 +17,16 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     //send formstate to api
     axios
       .post(`http://localhost:5000/api/login`, formState)
       .then(
         //save token to local storage
         (res) => {
+          console.log(res.data);
           localStorage.setItem('token', res.data.payload);
-          useHistory.push('/BubblePage');
+          history.push('/BubblePage');
         }
       )
       .catch((err) => console.log(err.message));
